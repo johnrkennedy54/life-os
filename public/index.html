@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-mark">Life OS</div>
+      <div class="login-logo-sub">Personal Dashboard v0.1</div>
+    </div>
+    <div id="login-error" class="login-error" style="display:none"></div>
+    <div class="field-wrap">
+      <label class="field-label">Username</label>
+      <input type="text" id="login-username" autocomplete="username" placeholder="your username">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Password</label>
+      <input type="password" id="login-password" autocomplete="current-password" placeholder="••••••••">
+    </div>
+    <button class="login-btn" id="login-btn" onclick="handleLogin()">Sign in</button>
+    <div id="register-section" style="display:none">
+      <div class="login-divider">No account yet — create one to get started</div>
+      <button class="login-btn secondary" onclick="handleRegister()">Create account</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="shell" style="display:none">
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">Life OS</div>
+      <div class="logo-sub">Personal Dashboard v0.1</div>
+    </div>
+    <nav>
+      <div class="nav-home active" id="nav-home-btn" onclick="showPage('home')">
+        <svg class="nav-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="nav-home-label">Overview</span>
+      </div>
+      <div class="nav-section">
+        <div class="nav-category" style="--cat-color:var(--work)" id="navc-work" onclick="toggleNav(this,'nav-work')">
+          <span class="drag-handle" onclick="event.stopPropagation()"><svg viewBox="0 0 8 14" width="8" height="14" fill="currentColor"><circle cx="2" cy="2" r="1.2"/><circle cx="6" cy="2" r="1.2"/><circle cx="2" cy="7" r="1.2"/><circle cx="6" cy="7" r="1.2"/><circle cx="2" cy="12" r="1.2"/><circle cx="6" cy="12" r="1.2"/></svg></span>
+          <span class="cat-dot" style="background:var(--work)"></span><span class="nav-cat-label">Work</span><span class="nav-chevron">▾</span>
+        </div>
+        <div class="nav-subcats" id="nav-work">
+          <div class="nav-sub" style="--cat-color:var(--work)" onclick="showSubpage('work','dayday','Day to day','Tasks · Meetings · Notes')">Day to day</div>
+          <div class="nav-sub" style="--cat-color:var(--work)" onclick="showSubpage('work','certs','Certifications','Progress · Goals · Deadlines')">Certifications</div>
+          <div class="nav-sub" style="--cat-color:var(--work)" onclick="showSubpage('work','school','Schooling','Courses · Credits · Schedule')">Schooling</div>
+          <div class="nav-sub" style="--cat-color:var(--work)" onclick="showSubpage('work','adv','Advancement plan','Goals · Milestones · Timeline')">Advancement plan</div>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-category" style="--cat-color:var(--health)" id="navc-health" onclick="toggleNav(this,'nav-health')">
+          <span class="drag-handle" onclick="event.stopPropagation()"><svg viewBox="0 0 8 14" width="8" height="14" fill="currentColor"><circle cx="2" cy="2" r="1.2"/><circle cx="6" cy="2" r="1.2"/><circle cx="2" cy="7" r="1.2"/><circle cx="6" cy="7" r="1.2"/><circle cx="2" cy="12" r="1.2"/><circle cx="6" cy="12" r="1.2"/></svg></span>
+          <span class="cat-dot" style="background:var(--health)"></span><span class="nav-cat-label">Health</span><span class="nav-chevron">▾</span>
+        </div>
+        <div class="nav-subcats" id="nav-health">
+          <div class="nav-sub" style="--cat-color:var(--health)" onclick="showSubpage('health','habits','Habit tracking','Streaks · Daily checks')">Habit tracking</div>
+          <div class="nav-sub" style="--cat-color:var(--health)" onclick="showSubpage('health','exercise','Exercise schedule','Workouts · Rest days')">Exercise schedule</div>
+          <div class="nav-sub" style="--cat-color:var(--health)" onclick="showSubpage('health','appts','Appointments','Upcoming · History')">Appointments</div>
+          <div class="nav-sub" style="--cat-color:var(--health)" onclick="showSubpage('health','meal','Meal prepping','Recipes · Grocery · Macros')">Meal prepping</div>
+          <div class="nav-sub" style="--cat-color:var(--health)" onclick="showSubpage('health','style','Style','Wardrobe · Outfits · Goals')">Style</div>
+          <div class="nav-sub" style="--cat-color:var(--health)" onclick="showSubpage('health','adv','Advancement plan','Goals · Benchmarks · Vision')">Advancement plan</div>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-category" style="--cat-color:var(--apt)" id="navc-apt" onclick="toggleNav(this,'nav-apt')">
+          <span class="drag-handle" onclick="event.stopPropagation()"><svg viewBox="0 0 8 14" width="8" height="14" fill="currentColor"><circle cx="2" cy="2" r="1.2"/><circle cx="6" cy="2" r="1.2"/><circle cx="2" cy="7" r="1.2"/><circle cx="6" cy="7" r="1.2"/><circle cx="2" cy="12" r="1.2"/><circle cx="6" cy="12" r="1.2"/></svg></span>
+          <span class="cat-dot" style="background:var(--apt)"></span><span class="nav-cat-label">Apartment</span><span class="nav-chevron">▾</span>
+        </div>
+        <div class="nav-subcats" id="nav-apt">
+          <div class="nav-sub" style="--cat-color:var(--apt)" onclick="showSubpage('apt','layout','Layout blueprint','Floor plan · Dimensions')">Layout blueprint</div>
+          <div class="nav-sub" style="--cat-color:var(--apt)" onclick="showSubpage('apt','manifest','Item manifest','Inventory · What you own')">Item manifest</div>
+          <div class="nav-sub" style="--cat-color:var(--apt)" onclick="showSubpage('apt','needed','Items needed','Must-haves · Priority list')">Items needed</div>
+          <div class="nav-sub" style="--cat-color:var(--apt)" onclick="showSubpage('apt','wanted','Items wanted','Wish list · Future buys')">Items wanted</div>
+          <div class="nav-sub" style="--cat-color:var(--apt)" onclick="showSubpage('apt','adv','Advancement plan','Upgrades · Timeline · Vision')">Advancement plan</div>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-category" style="--cat-color:var(--fin)" id="navc-fin" onclick="toggleNav(this,'nav-fin')">
+          <span class="drag-handle" onclick="event.stopPropagation()"><svg viewBox="0 0 8 14" width="8" height="14" fill="currentColor"><circle cx="2" cy="2" r="1.2"/><circle cx="6" cy="2" r="1.2"/><circle cx="2" cy="7" r="1.2"/><circle cx="6" cy="7" r="1.2"/><circle cx="2" cy="12" r="1.2"/><circle cx="6" cy="12" r="1.2"/></svg></span>
+          <span class="cat-dot" style="background:var(--fin)"></span><span class="nav-cat-label">Finances</span><span class="nav-chevron">▾</span>
+        </div>
+        <div class="nav-subcats" id="nav-fin">
+          <div class="nav-sub" style="--cat-color:var(--fin)" onclick="showSubpage('fin','overview','Overview','Net worth · Accounts · Summary')">Overview</div>
+          <div class="nav-sub" style="--cat-color:var(--fin)" onclick="showSubpage('fin','budget','Monthly budget','Income · Expenses · Savings')">Monthly budget</div>
+          <div class="nav-sub" style="--cat-color:var(--fin)" onclick="showSubpage('fin','credit','Credit repair','Score · Disputes · Progress')">Credit repair</div>
+          <div class="nav-sub" style="--cat-color:var(--fin)" onclick="showSubpage('fin','adv','Advancement plan','Savings goals · Investments')">Advancement plan</div>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-category" style="--cat-color:var(--lab)" id="navc-lab" onclick="toggleNav(this,'nav-lab')">
+          <span class="drag-handle" onclick="event.stopPropagation()"><svg viewBox="0 0 8 14" width="8" height="14" fill="currentColor"><circle cx="2" cy="2" r="1.2"/><circle cx="6" cy="2" r="1.2"/><circle cx="2" cy="7" r="1.2"/><circle cx="6" cy="7" r="1.2"/><circle cx="2" cy="12" r="1.2"/><circle cx="6" cy="12" r="1.2"/></svg></span>
+          <span class="cat-dot" style="background:var(--lab)"></span><span class="nav-cat-label">Homelab</span><span class="nav-chevron">▾</span>
+        </div>
+        <div class="nav-subcats" id="nav-lab">
+          <div class="nav-sub" style="--cat-color:var(--lab)" onclick="showSubpage('lab','dayday','Day to day','Tasks · Logs · Uptime')">Day to day</div>
+          <div class="nav-sub" style="--cat-color:var(--lab)" onclick="showSubpage('lab','week','Week to week','Projects · Maintenance · Plans')">Week to week</div>
+          <div class="nav-sub" style="--cat-color:var(--lab)" onclick="showSubpage('lab','catch','Catch all','Notes · Ideas · Scratch')">Catch all</div>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="status-pill"><span class="status-dot"></span><span id="sidebar-user">—</span></div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:10px;letter-spacing:0.04em;" id="sidebar-date"></div>
+      <button class="logout-btn" onclick="handleLogout()">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+      <div class="topbar">
+        <div><div class="page-title">Good to see you.</div><div class="page-subtitle" id="main-date"></div></div>
+        <div class="topbar-right" id="topbar-time"></div>
+      </div>
+      <div class="overview-bar">
+        <div class="stat-card" style="--cat-color:var(--work)"><div class="stat-count">4</div><div class="stat-label">Work modules</div></div>
+        <div class="stat-card" style="--cat-color:var(--health)"><div class="stat-count">6</div><div class="stat-label">Health modules</div></div>
+        <div class="stat-card" style="--cat-color:var(--apt)"><div class="stat-count">5</div><div class="stat-label">Apartment modules</div></div>
+        <div class="stat-card" style="--cat-color:var(--fin)"><div class="stat-count">4</div><div class="stat-label">Finance modules</div></div>
+        <div class="stat-card" style="--cat-color:var(--lab)"><div class="stat-count">3</div><div class="stat-label">Homelab modules</div></div>
+      </div>
+      <div id="home-categories"></div>
+    </div>
+
+    <!-- SUBPAGE -->
+    <div class="page" id="page-sub">
+      <div class="subpage-header">
+        <button class="back-btn" onclick="showPage('home')">← Back</button>
+        <div class="subpage-badge"><span class="subpage-dot" id="sub-dot"></span><span class="subpage-cat" id="sub-cat"></span></div>
+      </div>
+      <div class="subpage-title" id="sub-title"></div>
+      <div class="subpage-desc" id="sub-desc"></div>
+      <div class="divider-line" id="sub-divider"></div>
+      <div class="editor-shell">
+        <div class="editor-toolbar">
+          <div class="editor-toolbar-left">
+            <span class="editor-label">Content editor</span>
+            <span class="lang-badge" id="editor-lang">HTML</span>
+          </div>
+          <div class="toolbar-btns">
+            <button class="tbtn" onclick="clearEditor()">Clear</button>
+            <button class="tbtn" onclick="togglePreview()">Preview</button>
+            <button class="tbtn primary" onclick="saveContent()">Save ↓</button>
+          </div>
+        </div>
+        <textarea class="editor-textarea" id="editor-textarea" placeholder="Write HTML here — headings, tables, lists, anything you need." oninput="onEdit()"></textarea>
+        <div class="editor-footer">
+          <span class="char-count" id="char-count">0 characters</span>
+          <span class="save-indicator" id="save-indicator">unsaved</span>
+        </div>
+      </div>
+      <div class="preview-shell" id="preview-shell">
+        <div class="preview-bar">
+          <span class="preview-label">Live preview</span>
+          <button class="tbtn" onclick="togglePreview()">Close</button>
+        </div>
+        <iframe class="preview-frame" id="preview-frame" style="min-height:300px;"></iframe>
+      </div>
+      <div class="entries-section">
+        <div class="entries-header">
+          <span class="entries-title">Saved entries</span>
+          <span class="entries-count" id="entries-count"></span>
+        </div>
+        <div id="entries-list"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

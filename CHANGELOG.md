@@ -1,0 +1,31 @@
+# Life OS — Project Changelog
+
+| # | Date | Version | Type | Change | Description | Files |
+|---|------|---------|------|--------|-------------|-------|
+| 001 | Jun 3, 2026 | v0.1 | INIT | Project scaffolded | Initial Life OS project created. Node.js + Express + sql.js stack. Public/server folder structure established. | index.js, package.json |
+| 002 | Jun 3, 2026 | v0.1 | FEAT | Dashboard HTML prototype | Single-file HTML dashboard built with 5 categories: Work, Health, Apartment, Finances, Homelab. Dark theme, noise texture, Plus Jakarta Sans font. | public/index.html, public/css/style.css |
+| 003 | Jun 3, 2026 | v0.1 | FEAT | Collapsible sidebar nav | Sidebar with expandable category sections. Overview tab added above Work. Active state indicators and color-coded category accents. | public/index.html, public/js/app.js |
+| 004 | Jun 3, 2026 | v0.1 | FEAT | Subpage routing system | Each subcategory opens a dedicated subpage. Shared page-sub template reused for all 22 subpages. Back button returns to overview. | public/js/app.js |
+| 005 | Jun 3, 2026 | v0.1 | FEAT | HTML content editor | Textarea-based HTML editor on every subpage. Character counter, save indicator, clear with confirmation, live preview in iframe. | public/js/app.js, public/css/style.css |
+| 006 | Jun 3, 2026 | v0.1 | FEAT | localStorage persistence | Editor content saved per-page to browser localStorage with timestamp. Entries survived page refresh. Later replaced by API. | public/js/app.js |
+| 007 | Jun 3, 2026 | v0.1 | STYLE | Font changed to Plus Jakarta Sans | Swapped DM Sans + Syne for Plus Jakarta Sans (geometric, clean, open source). DM Mono retained for code/label elements. | public/css/style.css, public/index.html |
+| 008 | Jun 3, 2026 | v0.1 | FEAT | Entries feed system | Save now creates timestamped entry cards below editor. Entries shown in reverse chronological order. Edit, Delete, Render actions per entry. | public/js/app.js, public/css/style.css |
+| 009 | Jun 3, 2026 | v0.1 | FEAT | HTML render toggle | Entries containing HTML get a Render button. Toggles between raw source view and live iframe render. Frame height auto-sized. | public/js/app.js |
+| 010 | Jun 3, 2026 | v0.1 | INFRA | Project split into files | Monolithic HTML split into index.html, public/css/style.css, public/js/app.js. Proper project folder structure established. | public/, server/ |
+| 011 | Jun 3, 2026 | v0.1 | INFRA | Express server added | Node.js Express server created. Serves static files, handles API routes, SPA fallback. Helmet, CORS, cookie-parser, dotenv configured. | index.js |
+| 012 | Jun 3, 2026 | v0.1 | INFRA | SQLite database layer | sql.js chosen over better-sqlite3 (no native compile needed). In-memory DB exported to disk on every write. getDb, run, get, all helpers. | server/db/database.js |
+| 013 | Jun 3, 2026 | v0.1 | INFRA | DB schema initialized | users table (id, username, password, created_at) and entries table (id, page_key, content, created_at, updated_at) created with indexes. | server/db/database.js |
+| 014 | Jun 3, 2026 | v0.1 | SECURITY | JWT auth system | bcrypt password hashing, JWT tokens in httpOnly cookies, sameSite strict, secure flag in production. 7-day session expiry. | server/routes/auth.js, server/middleware/auth.js |
+| 015 | Jun 3, 2026 | v0.1 | SECURITY | Login rate limiting | 10 attempts per 15 minutes via express-rate-limit. Timing-safe dummy bcrypt on unknown usernames to prevent user enumeration. | server/routes/auth.js |
+| 016 | Jun 3, 2026 | v0.1 | SECURITY | Single-user registration lock | Registration blocked after first account created. Server returns 403 on subsequent register attempts. Designed for single-user install. | server/routes/auth.js |
+| 017 | Jun 3, 2026 | v0.1 | FEAT | Entries REST API | GET/POST/PUT/DELETE endpoints at /api/entries/:pageKey. All routes behind requireAuth middleware. Ownership check on PUT and DELETE. | server/routes/entries.js |
+| 018 | Jun 3, 2026 | v0.1 | FEAT | Frontend auth flow | init() checks /api/auth/status on load. Login/register form shown when unauthenticated. Register section always visible (server guards it). | public/js/app.js |
+| 019 | Jun 3, 2026 | v0.1 | FEAT | Frontend migrated to API | localStorage replaced with REST API calls. api() helper wraps fetch with JSON headers and same-origin credentials. Throws on non-2xx. | public/js/app.js |
+| 020 | Jun 3, 2026 | v0.1 | SECURITY | Content Security Policy fix | scriptSrcAttr added to CSP to allow inline onclick handlers. Fixed blocked event handler console error preventing Create Account. | index.js |
+| 021 | Jun 3, 2026 | v0.1 | INFRA | .env config system | .env.example template committed. .env gitignored. PORT, JWT_SECRET, JWT_EXPIRES_IN, DB_PATH, BCRYPT_ROUNDS, NODE_ENV variables. | .env.example, .gitignore |
+| 022 | Jun 3, 2026 | v0.1 | DOCS | Setup & Deployment Guide | Word document covering local setup, first login, daily use, troubleshooting, Cloudflare Tunnel, and VPS deployment. | life-os-setup-guide.docx |
+| 023 | Jun 3, 2026 | v0.1 | DOCS | GitHub Version Control Guide | Word document covering git init, PAT auth, daily workflow, commit messages, branching, server deployment, GitHub Actions. | life-os-github-guide.docx |
+| 024 | Jun 3, 2026 | v0.1 | DOCS | Technical Documentation | 10-section reference covering architecture, env config, server, DB layer, auth, API, frontend, data flows, security, roadmap. | life-os-technical-docs.docx |
+| 025 | Jun 3, 2026 | v0.1 | DOCS | Credentials & Changelog documents | Credentials doc with entry blocks and change log. Project changelog with 25 pre-filled entries and auto-append script. | life-os-credentials.docx, life-os-changelog.docx |
+| 026 | Jun 3, 2026 | v0.1 | FEAT | Drag-to-reorder sidebar categories | Added a grip handle to each sidebar category header; dragging from the handle reorders categories live and persists the new order to localStorage across sessions. | public/index.html, public/css/style.css, public/js/app.js |
+| 027 | Jun 3, 2026 | v0.1 | INFRA | Changelog script: CLI arg support + same-day append | Script now accepts five CLI args for non-interactive use; dated file is appended to (not recreated) on same-day runs; readline only opened when running interactively. | scripts/changelog.js |
